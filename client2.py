@@ -2,9 +2,13 @@ import asyncio
 import websockets
 
 async def connect_client():
-    async with websockets.connect("ws://localhost:8765") as websocket:
+    server_ip = '192.168.0.129'
+    server_port = 8765
+
+    # async with websockets.connect("ws://localhost:8765") as websocket:
+    async with websockets.connect(f"ws://{server_ip}:{server_port}") as websocket:
         # Enviar uma mensagem inicial ao servidor
-        await websocket.send("Hello, server!")
+        await websocket.send("Cliente 1 Conectado!")
         
         # Aguardar e exibir a resposta do servidor
         response = await websocket.recv()
