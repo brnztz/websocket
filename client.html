@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client</title>
+</head>
+<body>
+    <h1>WebSocket Client</h1>
+    <input type="text" id="messageInput" placeholder="Digite uma mensagem...">
+    <button onclick="sendMessage()">Enviar</button>
+    <div id="messages"></div>
+
+    <script>
+        const serverIp = '192.168.0.129';
+        const serverPort = 8765;
+        const ws = new WebSocket(`ws://${serverIp}:${serverPort}`);
+
+        ws.onopen = function() {
+            console.log('Conectado ao servidor WebSocket');
+        };
+
+        ws.onmessage = function(event) {
+            const messagesDiv = document.getElementById('messages');
+            const newMessage = document.createElement('div');
+            newMessage.textContent = `Servidor: ${event.data}`;
+            messagesDiv.appendChild(newMessage);
+        };
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+            ws.send(message);
+
+            const messagesDiv = document.getElementById('messages');
+            const newMessage = document.createElement('div');
+            newMessage.textContent = `Você: ${message}`;
+            messagesDiv.appendChild(newMessage);
+
+            messageInput.value = '';
+        }
+    </script>
+</body>
+</html>

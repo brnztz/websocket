@@ -19,13 +19,12 @@ async def handle_client(websocket, path):
                 if client != websocket:
                     await client.send(f"Outro cliente disse: {message}")
     finally:
-        # Remover o cliente da lista ao desconectar
         connected_clients.remove(websocket)
 
-# Use o endereço IP do servidor ou '0.0.0.0' para escutar em todas as interfaces
 server_ip = '0.0.0.0'
 server_port = 8765
 
+# start_server = websockets.serve(handle_client, "localhost", server_port)
 start_server = websockets.serve(handle_client, server_ip, server_port)
 
 asyncio.get_event_loop().run_until_complete(start_server)
